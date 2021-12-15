@@ -1,115 +1,252 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bakery_app/models/menu.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:vertical_scrollable_tabview/vertical_scrollable_tabview.dart';
 
-void main() {
-  runApp(const MyApp());
-}
+void main() => runApp(const MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: MyApp(),
+    ));
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({Key? key}) : super(key: key);
 
-  // This widget is the root of your application.
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
-        primarySwatch: Colors.blue,
-      ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
-    );
-  }
+  _MyAppState createState() => _MyAppState();
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key, required this.title}) : super(key: key);
+class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
+  final List<List<Menu>> data = [
+    [
+      Menu(
+          name: 'Indomie Goreng',
+          image: 'indomie-goreng.jpg',
+          price: '5000',
+          desc: 'Velit aliqua officia do cupidatat labore commodo aute.'),
+      Menu(
+          name: 'Indomie Rebus',
+          image: 'indomie-rebus.jpg',
+          price: '5000',
+          desc: 'Velit aliqua officia do cupidatat labore commodo aute.'),
+      Menu(
+          name: 'Indomie Dok Dok',
+          image: 'indomie-dok-dok.jpg',
+          price: '10000',
+          desc: 'Velit aliqua officia do cupidatat labore commodo aute.'),
+      Menu(
+          name: 'Nasi Goreng Hongkong',
+          image: 'nasi-goreng-hongkong.jpg',
+          price: '15000',
+          desc: 'Velit aliqua officia do cupidatat labore commodo aute.'),
+      Menu(
+          name: 'Nasi Goreng Tek Tek',
+          image: 'nasi-goreng-tek-tek.jpg',
+          price: '12000',
+          desc: 'Velit aliqua officia do cupidatat labore commodo aute.'),
+    ],
+    [
+      Menu(
+          name: 'Es Jeruk',
+          image: 'es-jeruk.jpg',
+          price: '4000',
+          desc: 'Velit aliqua officia do cupidatat labore commodo aute.'),
+      Menu(
+          name: 'Es Teh',
+          image: 'es-teh.jpeg',
+          price: '3000',
+          desc: 'Velit aliqua officia do cupidatat labore commodo aute.'),
+      Menu(
+          name: 'Soda Gembira',
+          image: 'soda-gembira.jpg',
+          price: '12000',
+          desc: 'Velit aliqua officia do cupidatat labore commodo aute.'),
+      Menu(
+          name: 'Kopi Hitam',
+          image: 'kopi-hitam.jpg',
+          price: '6000',
+          desc: 'Velit aliqua officia do cupidatat labore commodo aute.'),
+    ],
+    [
+      Menu(
+          name: 'Roti Bakar',
+          image: 'roti-bakar.jpg',
+          price: '8000',
+          desc: 'Velit aliqua officia do cupidatat labore commodo aute.'),
+      Menu(
+          name: 'Kentang Goreng',
+          image: 'kentang-goreng.jpg',
+          price: '8000',
+          desc: 'Velit aliqua officia do cupidatat labore commodo aute.'),
+      Menu(
+          name: 'Pisang Goreng',
+          image: 'pisang-goreng.jpg',
+          price: '4000',
+          desc: 'Velit aliqua officia do cupidatat labore commodo aute.'),
+    ]
+  ];
+  final List<String> categories = ['Food', 'Drink', 'Snack'];
 
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
-
-  final String title;
+  late TabController _tabController;
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
+  void initState() {
+    _tabController = TabController(length: 3, vsync: this);
+    super.initState();
   }
 
   @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
+  }
+
+  //////////////////////////////
+  /// @withflutter
+  ///
+  /// afifudin.vercel.app
+  //////////////////////////////
+  @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
     return Scaffold(
-      appBar: AppBar(
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
-      ),
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Invoke "debug painting" (press "p" in the console, choose the
-          // "Toggle Debug Paint" action from the Flutter Inspector in Android
-          // Studio, or the "Toggle Debug Paint" command in Visual Studio Code)
-          // to see the wireframe for each widget.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
+        backgroundColor: Colors.white,
+        appBar: AppBar(
+          elevation: 0,
+          backgroundColor: Colors.white,
+          leading: IconButton(
+            onPressed: () {},
+            icon: const Icon(
+              Icons.arrow_back,
+              color: Colors.black,
             ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
-            ),
+          ),
+          title: Text('Warmindo - Surabaya',
+              style: GoogleFonts.inter(
+                  color: Colors.black,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600)),
+          actions: [
+            IconButton(
+                onPressed: () {},
+                icon: const Icon(
+                  Icons.search,
+                  color: Colors.black,
+                )),
           ],
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
-    );
+        body: DefaultTabController(
+            length: 3,
+            child: Column(
+              children: [
+                TabBar(
+                  physics: const BouncingScrollPhysics(),
+                  controller: _tabController,
+                  labelColor: Colors.black,
+                  unselectedLabelColor: Colors.grey,
+                  indicatorColor: Colors.black,
+                  tabs: const [
+                    Tab(
+                      text: 'Food',
+                    ),
+                    Tab(
+                      text: 'Snack',
+                    ),
+                    Tab(
+                      text: 'Drink',
+                    ),
+                  ],
+                  onTap: (index) {
+                    VerticalScrollableTabBarStatus.setIndex(index);
+                  },
+                ),
+                Expanded(
+                    child: VerticalScrollableTabView(
+                        physics: const BouncingScrollPhysics(),
+                        tabController: _tabController,
+                        listItemData: data,
+                        verticalScrollPosition: VerticalScrollPosition.middle,
+                        scrollDirection: Axis.vertical,
+                        eachItemChild: (items, index) => Container(
+                              padding: const EdgeInsets.only(
+                                  top: 24, left: 24, right: 24),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(categories[index],
+                                      style: GoogleFonts.inter(
+                                          fontSize: 28,
+                                          fontWeight: FontWeight.w700)),
+                                  const SizedBox(
+                                    height: 24,
+                                  ),
+                                  Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: data[index].map((item) {
+                                        return Column(
+                                          children: [
+                                            Row(
+                                              children: [
+                                                Flexible(
+                                                  child: Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      Text(item.name!,
+                                                          style:
+                                                              GoogleFonts.inter(
+                                                            fontSize: 20,
+                                                            fontWeight:
+                                                                FontWeight.w700,
+                                                          )),
+                                                      Text(
+                                                        item.desc!,
+                                                        style:
+                                                            GoogleFonts.inter(
+                                                                fontSize: 12,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w500,
+                                                                color: Colors
+                                                                    .grey),
+                                                      ),
+                                                      Text('Rp ${item.price}',
+                                                          style:
+                                                              GoogleFonts.inter(
+                                                                  fontSize: 16,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w600)),
+                                                    ],
+                                                  ),
+                                                ),
+                                                const SizedBox(
+                                                  width: 24,
+                                                ),
+                                                Container(
+                                                  height: 72,
+                                                  width: 72,
+                                                  decoration: BoxDecoration(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              12),
+                                                      image: DecorationImage(
+                                                          image: AssetImage(
+                                                              'assets/images/${item.image}'),
+                                                          fit: BoxFit.cover)),
+                                                ),
+                                              ],
+                                            ),
+                                            const SizedBox(
+                                              height: 24,
+                                            ),
+                                          ],
+                                        );
+                                      }).toList()),
+                                ],
+                              ),
+                            )))
+              ],
+            )));
   }
 }
